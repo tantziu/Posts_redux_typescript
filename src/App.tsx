@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import './index.css';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import DashboardPage from './pages/dashboardPage';

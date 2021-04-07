@@ -1,38 +1,35 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Post} from '../components/post'
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {Post} from '../components/Post'
 import {fetchPosts, addPost} from '../actions/postsActions'
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import {AddPost} from '../components/addPost'
+import { useAppSelector, useAppDispatch } from '../app/hooks'
+import {AddPost} from '../components/AddPost'
 // import { renderIntoDocument } from 'react-dom/test-utils';
 
-type Props = {
-    posts: IArticle[]
-} 
+// type PostsPageProps = {
+//     posts: IArticle[];
+//     hasErrors: boolean;
+//     loading: boolean;
+    // fetchPosts: () => any;
+//     addPost: (post:any) => any;
+// }
 
-interface PropsFromState {
-    posts: IArticle[];
-    hasErrors: boolean;
-    loading: boolean;
-}
+const PostsPage = ()/*({loading, hasErrors/*, fetchPosts}:PostsPageProps)*/ => {
+    const dispatch:ThunkDispatch<any, any, AnyAction> = useAppDispatch()
+    const data = useAppSelector(state => state.posts.data)
+    const loading = useAppSelector(state => state.posts.loading)
+    const hasErrors = useAppSelector(state => state.posts.hasErrors)
 
-interface propsFromDispatch {
-    fetchPosts: () => any;
-    addPost: (post:any) => any;
-}
-
-type AllProps = PropsFromState & propsFromDispatch;
-
-const PostsPage = ({posts, loading, hasErrors, fetchPosts}:AllProps) => {
     useEffect(() => {
-        fetchPosts()
-    }, [])
+        dispatch(fetchPosts())
+    }, [dispatch])
     
     const renderPosts = () => {
         if (loading) return <p>Loading posts...</p>
         if (hasErrors) return <p>Unable to display posts/</p>
-        return posts.map(post => <Post key={post.id} post={post} extract/>)
+        return data.map(post => <Post key={post.id} post={post} extract/>)
     }
 
     const savePost = React.useCallback((article:IArticle) => 
@@ -54,9 +51,9 @@ const mapStateToProps = (state:any) => ({
     hasErrors: state.posts.hasErrors,
 })
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
-      fetchPosts: () => dispatch(fetchPosts()),
-      addPost: (post:any) => dispatch(addPost(post)),
-});
+// const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
+//       fetchPosts: () => dispatch(fetchPosts()),
+//       addPost: (post:any) => dispatch(addPost(post)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsPage)
+export default connect(mapStateToProps/*, mapDispatchToProps*/)(PostsPage)

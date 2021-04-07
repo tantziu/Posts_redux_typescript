@@ -1,10 +1,10 @@
 import * as React from "react";
 
-type Props = {
+type AddPostProps = {
     addPost: (post:IArticle | any) => void
 };
 
-export const AddPost:React.FC<Props> = ({addPost}) => {
+export const AddPost= ({addPost}:AddPostProps) => {
     const [post, setPost] = React.useState<IArticle | {}>();
 
 

@@ -6,16 +6,14 @@ type Props = {
     extract?: Boolean
 }
 
-export const Post:React.FC<Props> = ({post}) => (
-    <article className={"post"}>
+export const Post = ({post, extract}:Props) => (
+    <article className={extract ? "post-excerpt" : "post"}>
         <h1>{post.title}</h1>
-        <p>{post.body.substring(0, 100)}</p>
+        <p>{extract ? post.body.substring(0, 100) : post.body}</p>
 
-        {<Link to={`/posts/${post.id}`} className="button">
+        {extract && <Link to={`/posts/${post.id}`} className="button">
                 View Post
         </Link>
         }
-        
-
     </article>
 )

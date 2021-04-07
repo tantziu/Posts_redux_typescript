@@ -22,7 +22,6 @@ export const fetchPosts:AppThunk = () => {
         try {
             const response = await fetch('https://jsonplaceholder.typicode.com/posts');
             const posts = await response.json();
-            console.log("POSTS: ", posts)
             return dispatch(getPostsSuccess(posts))
         } catch(error) {
             return dispatch(getPostsFailure());

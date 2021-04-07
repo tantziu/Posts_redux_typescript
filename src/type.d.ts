@@ -1,5 +1,5 @@
 type IArticle = {
-    id: number,
+    id: string,
     title:string,
     body: string
 };
@@ -26,8 +26,8 @@ type  PostState = {
     hasErrors?: Boolean
 };
 
-type ApplicationState = {
-    posts: PostsState,
-    // post: PostState
-    // comments: CommentsState
-}
+// type ApplicationState = {
+//     posts: PostsState,
+//     // post: PostState
+//     // comments: CommentsState
+// }

@@ -1,34 +1,37 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { SinglePost } from '../components/singlePost'
+import { Post } from '../components/Post'
 import {fetchPost} from '../actions/postActions'
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { RouteComponentProps } from 'react-router';
+import { useAppSelector, useAppDispatch } from '../app/hooks'
 
-interface PropsFromState {
-    post: IArticle;
-    hasErrors: boolean;
-    loading: boolean;
+interface PostParams  {
+    id: string
 }
 
-const SinglePostPage:React.FC<any> = ({
-    match, 
-    dispatch, 
-    post, 
-    loading, 
-    hasErrors
-}) => {
-    useEffect(() => {
-        const { id } = match.params;
-        console.log("id: ", id)
-        dispatch(fetchPost(id))
-    }, [dispatch, match]
+interface SinglePostPageProps extends RouteComponentProps<PostParams> {
+}
 
-    )
+const SinglePostPage = ({match}: SinglePostPageProps) => {
+    const { id } = match.params
+
+    useEffect(() => {
+        dispatch(fetchPost(id))
+    }, [])
+
+    const dispatch:ThunkDispatch<any, any, AnyAction> = useAppDispatch()
+    const item = useAppSelector(state => state.post.item)
+    const loading = useAppSelector(state => state.post.loading)
+    const hasErrors = useAppSelector(state => state.post.hasErrors)
+    
+    
 
     const renderPost = () => {
         if (loading) return <p>Loading post...</p>
         if (hasErrors) return <p>Unable to display post.</p>
-        console.log("Post from page: ", post);
-        return  <SinglePost post={post}/>
+        return  <Post post={item}/>
     }
     return (
         <section>
@@ -37,14 +40,4 @@ const SinglePostPage:React.FC<any> = ({
     )
 }
 
-const mapStateToProps = (state:any) => ({
-    post: state.post.item,
-    loading: state.post.loading,
-    hasErrors: state.post.hasErrors
-});
-
-const mapDispatchToProps = (dispatch:any/*: ThunkDispatch<any, any, AnyAction>*/) => ({
-    fetchPost:(id:number) => dispatch(fetchPost(id)),
-});
-
-export default connect(mapStateToProps)(SinglePostPage);
+export default SinglePostPage

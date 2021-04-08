@@ -32,7 +32,7 @@ const PostsPage = ()/*({loading, hasErrors/*, fetchPosts}:PostsPageProps)*/ => {
         return data.map(post => <Post key={post.id} post={post} extract/>)
     }
 
-    const savePost = React.useCallback((article:IArticle) => 
+    const savePost = React.useCallback((article:IArticle) =>
         addPost(article),
         []
     )

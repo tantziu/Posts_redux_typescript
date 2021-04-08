@@ -10,10 +10,9 @@ export const initialState:PostState = {
 
 const postReducer:Reducer<PostState> = (state = initialState, action) => {
     switch(action.type) {
-        case actions.GET_POST:
-            console.log("action get_post")
+        case actions.GET_SINGLE_POST:
             return {...state, loading:true}
-        case actions.GET_POST_SUCCESS:
+        case actions.GET_SINGLE_POST_SUCCESS:
             return {item:action.payload, loading:false, hasErrors:false}
         case actions.GET_POST_FAILURE:
             return {...state, loading:false, hasErrors:true}

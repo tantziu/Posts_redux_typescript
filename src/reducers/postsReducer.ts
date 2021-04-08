@@ -11,7 +11,7 @@ const postsReducer:Reducer<PostsState> = (state = initialState, action) => {
     switch(action.type) {
         case actions.GET_POSTS_REQUEST :
             return {...state, loading:true}
-        case actions.GET_POST_SUCCESS:
+        case actions.GET_ALL_POSTS_SUCCESS:
             return {...state, data:action.payload, loading:false, hasErrors:false}
         case actions.GET_POST_FAILURE:
             return {...state, loading:false, hasErrors:true}

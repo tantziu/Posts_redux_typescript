@@ -7,7 +7,7 @@ const getPosts:ActionCreator<Action> = () => ({
 });
 
 const getPostsSuccess = (posts:IArticle[]) => ({
-    type: actions.GET_POST_SUCCESS,
+    type: actions.GET_ALL_POSTS_SUCCESS,
     payload: posts
 });
 const getPostsFailure = () => ({
